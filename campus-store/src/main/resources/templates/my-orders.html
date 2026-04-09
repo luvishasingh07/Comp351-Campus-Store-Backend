@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h2>My Orders</h2>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Status</th>
+    <th>Total</th>
+    <th>Details</th>
+</tr>
+
+<tr th:each="o : ${orders.content}">
+    <td th:text="${o.id}"></td>
+    <td th:text="${o.status}"></td>
+    <td th:text="${o.total}"></td>
+
+    <td>
+        <a th:href="@{'/my-orders/' + ${o.id}}">View</a>
+    </td>
+</tr>
+
+</table>
+
+<br>
+
+<!-- Pagination -->
+<div>
+    <a th:if="${orders.hasPrevious()}"
+       th:href="@{/my-orders(page=${orders.number - 1})}">Prev</a>
+
+    <a th:if="${orders.hasNext()}"
+       th:href="@{/my-orders(page=${orders.number + 1})}">Next</a>
+</div>
+
+</body>
+</html>

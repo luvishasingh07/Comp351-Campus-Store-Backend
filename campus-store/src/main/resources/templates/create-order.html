@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+   <div th:replace="fragments/navbar :: navbar"></div>
+<h2>Create Order</h2>
+
+<form th:action="@{/orders}" method="post" th:object="${createOrderRequest}">
+
+<table border="1">
+<tr>
+    <th>Product</th>
+    <th>Quantity</th>
+</tr>
+
+<tr th:each="p : ${products}">
+    <td th:text="${p.name}"></td>
+    <td>
+        <input type="number" name="quantities[__${p.id}__]" value="0" min="0"/>
+    </td>
+</tr>
+
+</table>
+
+<br>
+<button type="submit">Place Order</button>
+
+</form>
+
+</body>
+</html>

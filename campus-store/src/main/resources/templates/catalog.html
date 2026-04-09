@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <div th:replace="fragments/navbar :: navbar"></div>
+<h1>Catalog</h1>
+
+<!-- ================= FILTER + SORT ================= -->
+<form method="get" th:action="@{/catalog}">
+
+    <!-- Search -->
+    <input type="text" name="name" placeholder="Search"
+           th:value="${name}">
+
+    <!-- Category -->
+    <select name="categoryId">
+        <option value="">All Categories</option>
+        <option th:each="c : ${categories}"
+                th:value="${c.id}"
+                th:text="${c.name}"
+                th:selected="${c.id} == ${categoryId}">
+        </option>
+    </select>
+
+    <!-- In Stock -->
+    <select name="inStock">
+        <option value="">All</option>
+        <option value="true" th:selected="${inStock} == true">In Stock</option>
+        <option value="false" th:selected="${inStock} == false">Out of Stock</option>
+    </select>
+
+    <!-- Sort -->
+    <select name="sortBy">
+        <option value="name" th:selected="${sortBy} == 'name'">Name</option>
+        <option value="price" th:selected="${sortBy} == 'price'">Price</option>
+    </select>
+
+    <select name="sortDir">
+        <option value="asc" th:selected="${sortDir} == 'asc'">Asc</option>
+        <option value="desc" th:selected="${sortDir} == 'desc'">Desc</option>
+    </select>
+
+    <button type="submit">Apply</button>
+
+</form>
+
+<br>
+
+<!-- ================= PRODUCT LIST ================= -->
+<table border="1">
+<tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Stock</th>
+    <th>Details</th>
+</tr>
+
+<tr th:each="p : ${products.content}">
+    <td th:text="${p.name}"></td>
+    <td th:text="${p.price}"></td>
+    <td th:text="${p.stockQty}"></td>
+
+    <td>
+        <a th:href="@{'/products/' + ${p.id}}">View</a>
+    </td>
+</tr>
+
+</table>
+
+<br>
+
+<!-- ================= PAGINATION ================= -->
+<div>
+
+    <span th:text="'Page: ' + ${products.number + 1}"></span>
+
+    <div>
+        <!-- Previous -->
+        <a th:if="${products.hasPrevious()}"
+           th:href="@{/catalog(page=${products.number - 1}, name=${name}, categoryId=${categoryId}, inStock=${inStock}, sortBy=${sortBy}, sortDir=${sortDir})}">
+            Prev
+        </a>
+
+        <!-- Next -->
+        <a th:if="${products.hasNext()}"
+           th:href="@{/catalog(page=${products.number + 1}, name=${name}, categoryId=${categoryId}, inStock=${inStock}, sortBy=${sortBy}, sortDir=${sortDir})}">
+            Next
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

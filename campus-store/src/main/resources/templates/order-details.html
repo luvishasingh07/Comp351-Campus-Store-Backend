@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h2>Order Details</h2>
+
+<p><b>Order ID:</b> <span th:text="${order.id}"></span></p>
+<p><b>Status:</b> <span th:text="${order.status}"></span></p>
+<p><b>Total:</b> <span th:text="${order.total}"></span></p>
+
+<h3>Items</h3>
+
+<table border="1">
+<tr>
+    <th>Product</th>
+    <th>Qty</th>
+    <th>Price</th>
+</tr>
+
+<tr th:each="item : ${order.items}">
+    <td th:text="${item.product.name}"></td>
+    <td th:text="${item.qty}"></td>
+    <td th:text="${item.unitPrice}"></td>
+</tr>
+
+</table>
+
+<br>
+<a href="/my-orders">Back</a>
+
+</body>
+</html>

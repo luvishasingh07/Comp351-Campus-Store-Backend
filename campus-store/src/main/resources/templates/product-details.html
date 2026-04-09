@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h2>Product Details</h2>
+
+<p><b>Name:</b> <span th:text="${product.name}"></span></p>
+<p><b>Description:</b> <span th:text="${product.description}"></span></p>
+<p><b>Price:</b> <span th:text="${product.price}"></span></p>
+<p><b>Stock:</b> <span th:text="${product.stockQty}"></span></p>
+
+<a href="/catalog">Back to Catalog</a>
+
+</body>
+</html>
