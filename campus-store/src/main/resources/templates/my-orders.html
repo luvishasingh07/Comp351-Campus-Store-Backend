@@ -1,38 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>My Orders</title>
+<style>
+body {font-family:Arial;background:#f4f4f4;margin:0;}
+.container {padding:20px;}
+.card {background:#fff;padding:15px;border-radius:8px;margin-bottom:10px;}
+</style>
+</head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+
+<div th:replace="fragments/navbar :: *"></div>
+
+<div class="container">
 <h2>My Orders</h2>
 
-<table border="1">
-<tr>
-    <th>ID</th>
-    <th>Status</th>
-    <th>Total</th>
-    <th>Details</th>
-</tr>
+<div th:each="o : ${orders}" class="card">
+  <p><b>Order ID:</b> <span th:text="${o.id}"></span></p>
+  <p><b>Total:</b> $<span th:text="${o.total}"></span></p>
+  <p><b>Status:</b> <span th:text="${o.status}"></span></p>
+  <a th:href="@{'/orders/' + ${o.id}}">View Details</a>
+</div>
 
-<tr th:each="o : ${orders.content}">
-    <td th:text="${o.id}"></td>
-    <td th:text="${o.status}"></td>
-    <td th:text="${o.total}"></td>
-
-    <td>
-        <a th:href="@{'/my-orders/' + ${o.id}}">View</a>
-    </td>
-</tr>
-
-</table>
-
-<br>
-
-<!-- Pagination -->
-<div>
-    <a th:if="${orders.hasPrevious()}"
-       th:href="@{/my-orders(page=${orders.number - 1})}">Prev</a>
-
-    <a th:if="${orders.hasNext()}"
-       th:href="@{/my-orders(page=${orders.number + 1})}">Next</a>
 </div>
 
 </body>

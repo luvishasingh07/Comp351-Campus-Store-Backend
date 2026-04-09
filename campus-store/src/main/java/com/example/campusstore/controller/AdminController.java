@@ -40,32 +40,32 @@ public class AdminController {
     @PostMapping("/categories")
     public String createCategory(@Valid @ModelAttribute CategoryForm categoryForm) {
         categoryService.create(categoryForm.getName());
-        return "redirect:/admin";
+        return "redirect:/admin-dashboard";
     }
 
     @PostMapping("/products")
     public String createProduct(@Valid @ModelAttribute ProductForm productForm) {
         productService.create(productForm);
-        return "redirect:/admin";
+        return "redirect:/admin-dashboard";
     }
 
     @PostMapping("/products/{id}/edit")
     public String updateProduct(@PathVariable Long id,
                                 @Valid @ModelAttribute ProductForm productForm) {
         productService.update(id, productForm);
-        return "redirect:/admin";
+        return "redirect:/admin-dashboard";
     }
 
     @PostMapping("/products/{id}/deactivate")
     public String deactivateProduct(@PathVariable Long id) {
         productService.deactivate(id);
-        return "redirect:/admin";
+        return "redirect:/admin-dashboard";
     }
 
     @PostMapping("/orders/{id}/status")
     public String updateOrderStatus(@PathVariable Long id,
                                     @ModelAttribute OrderStatusUpdateRequest request) {
         orderService.updateStatus(id, request.getStatus());
-        return "redirect:/admin";
+        return "redirect:/admin-dashboard";
     }
 }

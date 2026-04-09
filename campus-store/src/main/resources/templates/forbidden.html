@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Forbidden</title>
+    <style>
+        body { font-family: Arial; text-align:center; padding:50px; }
+        h1 { color:red; }
+    </style>
+</head>
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
 
-<h2> Access Denied </h2>
-
+<h1>403 Forbidden</h1>
 <p>You are not allowed to access this page.</p>
 
-<a href="/catalog">Go back to catalog</a>
+<a href="/catalog">Go back</a>
 
 </body>
 </html>

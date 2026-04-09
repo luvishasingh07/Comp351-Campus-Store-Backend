@@ -1,102 +1,91 @@
-<!DOCTYPE html>
+Tanshu Sachdeva:
+	<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Admin</title>
+<style>
+body {font-family:Arial;background:#f4f4f4;margin:0;padding:20px;}
+.card {background:#fff;padding:15px;border-radius:8px;margin-bottom:20px;}
+button {background:#dc3545;color:#fff;border:none;padding:6px;}
+</style>
+</head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
-<h1>Admin Dashboard</h1>
 
-<!-- ================= CATEGORY SECTION ================= -->
-<h2>Categories</h2>
+<div th:replace="fragments/navbar :: *"></div>
 
-<table border="1">
-<tr>
-    <th>ID</th>
-    <th>Name</th>
-</tr>
+<h2>Admin Dashboard</h2>
 
-<tr th:each="cat : ${categories}">
-    <td th:text="${cat.id}"></td>
-    <td th:text="${cat.name}"></td>
-</tr>
-</table>
-
-<h3>Create Category</h3>
-<form th:action="@{/admin/categories}" method="post" th:object="${categoryForm}">
-    <input type="text" th:field="*{name}" placeholder="Category name" required>
-    <button type="submit">Add</button>
+<div class="card">
+<h3>Add Product</h3>
+<form method="post" action="/admin/product">
+  <input name="name" placeholder="Name"/><br><br>
+  <input name="price" placeholder="Price"/><br><br>
+  <input name="stockQty" placeholder="Stock"/><br><br>
+  <button>Add</button>
 </form>
+</div>
 
-<hr>
+<div class="card">
+<h3>Products</h3>
 
-<!-- ================= PRODUCT SECTION ================= -->
-<h2>Products</h2>
+<div th:each="p : ${products}">
+  <p>
+    <b th:text="${p.name}"></b> - $<span th:text="${p.price}"></span>
 
-<table border="1">
-<tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Stock</th>
-    <th>Actions</th>
-</tr>
+    <form method="post" action="/admin/deactivate" style="display:inline">
+      <input type="hidden" name="id" th:value="${p.id}"/>
+      <button>Deactivate</button>
+    </form>
+  </p>
+</div>
 
-<tr th:each="p : ${products}">
-    <td th:text="${p.id}"></td>
-    <td th:text="${p.name}"></td>
-    <td th:text="${p.price}"></td>
-    <td th:text="${p.stockQty}"></td>
+</div>
 
-    <td>
-        <!-- Deactivate -->
-        <form th:action="@{'/admin/products/' + ${p.id} + '/deactivate'}" method="post">
-            <button type="submit">Deactivate</button>
-        </form>
-    </td>
-</tr>
+</body>
+</html>
 
-</table>
+Tanishka Sachdeva:
+	<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Admin</title>
+<style>
+body {font-family:Arial;background:#f4f4f4;margin:0;padding:20px;}
+.card {background:#fff;padding:15px;border-radius:8px;margin-bottom:20px;}
+button {background:#dc3545;color:#fff;border:none;padding:6px;}
+</style>
+</head>
+<body>
 
-<h3>Create Product</h3>
-<form th:action="@{/admin/products}" method="post" th:object="${productForm}">
-    <input type="text" th:field="*{name}" placeholder="Name"><br><br>
-    <input type="text" th:field="*{description}" placeholder="Description"><br><br>
-    <input type="number" th:field="*{price}" placeholder="Price"><br><br>
-    <input type="number" th:field="*{stockQty}" placeholder="Stock"><br><br>
-    <input type="number" th:field="*{categoryId}" placeholder="Category ID"><br><br>
+<div th:replace="fragments/navbar :: *"></div>
 
-    <button type="submit">Create Product</button>
+<h2>Admin Dashboard</h2>
+
+<div class="card">
+<h3>Add Product</h3>
+<form method="post" action="/admin/product">
+  <input name="name" placeholder="Name"/><br><br>
+  <input name="price" placeholder="Price"/><br><br>
+  <input name="stockQty" placeholder="Stock"/><br><br>
+  <button>Add</button>
 </form>
+</div>
 
-<hr>
+<div class="card">
+<h3>Products</h3>
 
-<!-- ================= ORDERS SECTION ================= -->
-<h2>Orders</h2>
+<div th:each="p : ${products}">
+  <p>
+    <b th:text="${p.name}"></b> - $<span th:text="${p.price}"></span>
 
-<table border="1">
-<tr>
-    <th>ID</th>
-    <th>Status</th>
-    <th>Total</th>
-    <th>Update</th>
-</tr>
+    <form method="post" action="/admin/deactivate" style="display:inline">
+      <input type="hidden" name="id" th:value="${p.id}"/>
+      <button>Deactivate</button>
+    </form>
+  </p>
+</div>
 
-<tr th:each="o : ${orders.content}">
-    <td th:text="${o.id}"></td>
-    <td th:text="${o.status}"></td>
-    <td th:text="${o.total}"></td>
-
-    <td>
-        <form th:action="@{'/admin/orders/' + ${o.id} + '/status'}" method="post">
-            <select name="status">
-                <option value="NEW">NEW</option>
-                <option value="FULFILLED">FULFILLED</option>
-                <option value="CANCELLED">CANCELLED</option>
-            </select>
-            <button type="submit">Update</button>
-        </form>
-    </td>
-</tr>
-
-</table>
+</div>
 
 </body>
 </html>
